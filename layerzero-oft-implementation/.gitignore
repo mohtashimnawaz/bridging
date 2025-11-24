@@ -1,0 +1,69 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+.nyc_output
+
+# Build outputs
+dist/
+build/
+artifacts/
+cache/
+target/
+*.so
+*.dylib
+*.dll
+
+# Hardhat
+.openzeppelin/
+deployments/
+
+# Anchor / Solana
+.anchor/
+test-ledger/
+programs/*/target/
+*.profraw
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# TypeScript
+*.tsbuildinfo
+
+# Temp files
+tmp/
+temp/
+
+# Keypairs (NEVER COMMIT THESE)
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!hardhat.config.ts
+!Anchor.toml

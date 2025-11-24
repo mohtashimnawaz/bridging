@@ -7,14 +7,32 @@ describe("MyToken + OFT Adapter", function () {
 
     const Token = await ethers.getContractFactory("MyToken");
     const token = await Token.deploy("My Token", "MTK");
-    await token.deployed();
+    await token.waitForDeployment();
 
-    const LZ_ENDPOINT = ethers.constants.AddressZero; // placeholder for test
+    const LZ_ENDPOINT = ethers.ZeroAddress; // placeholder for test
     const OFT = await ethers.getContractFactory("MyTokenOFTAdapter");
-    const oft = await OFT.deploy(token.address, LZ_ENDPOINT, deployer.address);
-    await oft.deployed();
+    const oft = await OFT.deploy(await token.getAddress(), LZ_ENDPOINT, deployer.address);
+    await oft.waitForDeployment();
 
     expect(await token.name()).to.equal("My Token");
     expect(await token.symbol()).to.equal("MTK");
+  });
+
+  it("token has zero initial supply", async function () {
+    const Token = await ethers.getContractFactory("MyToken");
+    const token = await Token.deploy("Test Token", "TST");
+    await token.waitForDeployment();
+
+    expect(await token.totalSupply()).to.equal(0);
+  });
+
+  it("owner can mint tokens", async function () {
+    const [deployer, user] = await ethers.getSigners();
+    const Token = await ethers.getContractFactory("MyToken");
+    const token = await Token.deploy("Test Token", "TST");
+    await token.waitForDeployment();
+
+    await token.mint(user.address, ethers.parseEther("100"));
+    expect(await token.balanceOf(user.address)).to.equal(ethers.parseEther("100"));
   });
 });
