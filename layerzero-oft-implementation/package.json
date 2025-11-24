@@ -1,0 +1,41 @@
+{
+  "name": "layerzero-oft-adapter",
+  "version": "1.0.0",
+  "description": "LayerZero OFT Adapter for bridging custom SPL token to ERC-20",
+  "scripts": {
+    "build": "pnpm build:solana && pnpm build:evm",
+    "build:solana": "cd programs/oft-adapter && anchor build",
+    "build:evm": "hardhat compile",
+    "deploy:solana": "cd programs/oft-adapter && anchor deploy --provider.cluster mainnet",
+    "deploy:ethereum": "hardhat run scripts/deploy-ethereum.ts --network ethereum",
+    "test": "pnpm test:solana && pnpm test:evm",
+    "test:solana": "anchor test",
+    "test:evm": "hardhat test",
+    "verify:ethereum": "hardhat verify --network ethereum"
+  },
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.29.0",
+    "@layerzerolabs/lz-evm-oapp-v2": "^2.0.0",
+    "@layerzerolabs/lz-solana-sdk-v2": "^2.0.0",
+    "@layerzerolabs/oft-evm": "^2.0.0",
+    "@layerzerolabs/toolbox-hardhat": "^0.1.0",
+    "@openzeppelin/contracts": "^5.0.0",
+    "@solana/spl-token": "^0.4.0",
+    "@solana/web3.js": "^1.87.0",
+    "hardhat": "^2.19.0",
+    "ethers": "^6.9.0",
+    "dotenv": "^16.3.0"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.0",
+    "ts-node": "^10.9.0",
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}

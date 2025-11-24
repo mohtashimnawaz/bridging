@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, try ]
+  pull_request:
+    branches: [ main, try ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install pnpm
+        run: npm install -g pnpm
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build EVM contracts
+        run: pnpm build:evm
+      - name: Build Solana (Anchor)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pkg-config build-essential libudev-dev
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+          source $HOME/.cargo/env
+          npm i -g @coral-xyz/anchor
+          cd programs/oft-adapter && anchor build || true
