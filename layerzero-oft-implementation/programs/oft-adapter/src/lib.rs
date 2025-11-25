@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-declare_id!("OFtAdApTeR11111111111111111111111111111111");
+declare_id!("ARzZEdqRNG9mjBNWrc1rqn6N7CuBfuabUSSmZbGNjSSt");
 
 #[program]
 pub mod oft_adapter {
@@ -34,5 +34,7 @@ pub struct Initialize<'info> {
 
 #[derive(Accounts)]
 pub struct LockTokens<'info> {
-    // TODO: Define accounts needed to perform SPL token transfer
+    #[account(mut)]
+    pub user: Signer<'info>,
+    pub system_program: Program<'info, System>,
 }
